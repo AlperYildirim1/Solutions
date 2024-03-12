@@ -1,0 +1,49 @@
+import random
+import sys
+string = "3d5+5d4+10d12"
+print(string)
+li = list(string)
+dice_list = string.split("+")
+print(dice_list)
+string1=dice_list[0]
+print(string1)
+e=[0]*len(dice_list)
+v=0
+for dice in dice_list:
+    string1 = dice
+    x, y = map(int, string1.split('d'))
+    e[v]=x
+    v=v+1
+
+z=0
+v=0
+for dice in dice_list:
+    string1 = dice
+    x, y = map(int, string1.split('d'))
+    z = z + x
+
+list1=[0]*z
+for dice in dice_list:
+    string1=dice
+    x, y = map(int, string1.split('d'))
+    for i in range (x):
+
+        o=random.randint(1,y)
+        list1[v]=o
+        v=v+1
+v=0
+n=0
+m=e[n]
+print(e[0])
+print(list1)
+for i in range (len(list1)):
+
+    if v!=m:
+        sys.stdout.write(str(list1[v]) + " ")
+        v = v + 1
+    else:
+        sys.stdout.write( "--- " + str(list1[v]) + " " )
+        v=v+1
+        n=n+1
+        m=m+e[n]
+
