@@ -1,0 +1,99 @@
+
+#include<stdio.h>
+#include<math.h>
+using namespace std;
+#define M 1000000
+#define Mod 1000000000
+
+int Lower[M + 1], Higher[M + 1];
+char Used[M + 1];
+
+long long PrimePi(long long n) //https://am-just-a-nobody.blogspot.com/2015/11/c-code-for-primepi-function.html   
+{
+    long long v = sqrt(n), p, temp, q, j, end, i, d, t;
+    Higher[1] = n % Mod - 1;
+    for (p = 2; p <= v; p++) {
+        Lower[p] = p - 1;
+        Higher[p] = (n / p) % Mod - 1;
+    }
+    for (p = 2; p <= v; p++) {
+        if (Lower[p] == Lower[p - 1])
+            continue;
+        temp = Lower[p - 1];
+        q = p * p;
+        Higher[1] -= Higher[p] - temp;
+        if (Higher[1] < 0)
+            Higher[1] += Mod;
+        j = 1 + (p & 1);
+        end = (v <= n / q) ? v : n / q;
+        for (i = p + j; i <= 1 + end; i += j) {
+            if (Used[i])
+                continue;
+            d = i * p;
+            if (d <= v)
+                Higher[i] -= Higher[d] - temp;
+            else {
+                t = n / d;
+                Higher[i] -= Lower[t] - temp;
+            }
+            if (Higher[i] < 0)
+                Higher[i] += Mod;
+        }
+        if (q <= v)
+            for (i = q; i <= end; i += p * j)
+                Used[i] = 1;
+        for (i = v; i >= q; i--) {
+            t = i / p;
+            Lower[i] -= Lower[t] - temp;
+        }
+    }
+    return Higher[1] % Mod;
+}
+
+int main() {
+    long long int b = 100;
+    long long int b1 = 1000000000000;
+    long long int a2 = PrimePi(b);
+    printf("%d \n", a2);
+
+    bool d[500000]; d[0] = false; int s = 0;
+    for (long int i = 1; i < 500000; i++)
+    {
+        d[i] = true;
+    }
+    for (int i = 1; i * i < 1000000; i++)
+    {
+        int k = 2 * i + 1;
+        while ((2 * i + 1) * k < 1000001)
+        {
+            int a = (2 * i + 1) * k / 2;
+            d[a] = false; k = k + 2;
+        }
+    }
+    for (long int i = 0; i < 500000; i++)
+    {
+        if (d[i] == true)
+        {
+            s = s + 1;
+        }
+    }s++;
+   
+    int primes[78498]; primes[0] = 2; int n1 = 1; long long int t11 = 0;
+    for (int i = 1; i < 500000; i++)
+    {
+        if (d[i] == true) { primes[n1] = 2 * i + 1; n1++; }
+    }
+    int q1, q2, q3; q1 = 0; q2 = 1; q3 = 2; int t1 = 0;
+    while (primes[q1] * primes[q1+1] * primes[q1+2] < b1)
+    {
+        while (primes[q2] * primes[q2 + 1] * primes[q1] < b1)
+        {
+            b = b1 / (primes[q1] * primes[q2]);
+            a2 = PrimePi(b);
+            t11 = t11 + (a2)-q2;
+            q2++;
+        }
+        q1++;
+    }
+    return 0;
+}
