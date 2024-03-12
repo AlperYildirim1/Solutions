@@ -1,0 +1,95 @@
+#include <iomanip>
+#include <iostream>
+#include <stdlib.h>
+#include <windows.h>
+using namespace std;
+float m1; float n; int m[50][50]; int sonx = 5; int sony = 5;
+bool denklem(float x0, float y0, float x, float y)
+{
+	float* ptr1; ptr1 = &m1;
+	*ptr1 = (y - y0) / (x - x0);
+	float* ptrn; ptrn = &n; *ptrn = y - (m1 * x);
+	if (n >= 0) { return true; }
+	else { return false; }
+}
+void Line(int x0, int xs)
+{
+	int x, y; int* ptr; float fx, fy; int s = 0;
+	if (x0 < xs) { x = x0;  }
+	else { x = xs;  }
+	y = m1 * x + n; fx = (float)x;
+		fy = m1 * fx + n; 
+		if (fy - y != 0)
+		{
+			ptr = *m + ((y + 1) * 50 + x); *ptr = 4;
+		}
+		ptr = *m + (y * 50 + x);
+		*ptr = 4; 
+	x++; cout << x << endl;
+	for (s; s < 3; s++)
+	{
+		
+		y = m1 * x + n; fx = (float)x;
+		fy = m1 * fx + n; 
+		if (fy - y != 0)
+		{
+			ptr = *m + ((y + 1) * 50 + x); *ptr = 4;
+		}
+		ptr = *m + (y * 50 + x);
+		*ptr = 4; 
+		x++;
+		if (x == x0) { break; }
+		if (x == xs) { break; }
+	}
+	cout << "x= " << sonx << endl;
+	int* ptr1 = &sonx; *ptr1 = x;
+	int* ptr2 = &sony; *ptr2 = m1 * x + n;
+
+}
+void d(int xa)
+{
+	int* ptr = &xa; *ptr = 5;
+}
+int main()
+{
+	int sec = 0; float x0, y0, x, y; x0 = 5; y0 = 5; x = 40; y = 40; int x01 = sonx; int x1 = x;
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			m[i][j] = 0;
+		}
+	}
+	for (int i = 40; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			m[i][j] = 2;
+		}
+	}
+	
+	do 
+	{
+		
+	
+		
+		sec++;
+		Sleep(1000);
+		denklem(sonx, sony, x, y);
+		Line(sonx, x);
+		if (sec < 5) { x++;  }
+		else { x--; }
+		
+		for (int i = 0; i < 50; i++)
+		{
+			for (int j = 0; j < 50; j++)
+			{			
+				if (m[i][j] == 0) { cout << "  "; }
+				else if (i == x && j == y) { cout << "o "; }
+				else if (m[i][j] == 2) { cout << "- "; }
+				else { cout << "x "; }				
+			}
+			cout << endl;
+		}
+	}while (sony<y);	
+}
