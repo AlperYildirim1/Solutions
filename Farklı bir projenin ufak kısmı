@@ -1,0 +1,107 @@
+#include <iostream>
+#include <math.h>
+#include <cmath>
+using namespace std;
+int m[50][50]; float m1; float n;
+void g(int xb, int yb, int xs, int ys)
+{
+	int* ptr;
+	cout << xb << endl;
+	ptr = *m + (xb * 50 + yb); *ptr = 1;
+	if (xb > xs && yb > ys)
+	{
+
+	}
+}
+float denklem(float x0, float y0, float x, float y)
+{
+	float* ptr1; ptr1 = &m1;
+	*ptr1 = (y - y0) / (x - x0);
+	float* ptrn; ptrn = &n; *ptrn = y - (m1 * x);
+	if (n >= 0) { return true; }
+	else { return false; }
+	return m1;
+}
+void Line(int x0, int xs)
+{
+	int x, y; int* ptr; float fx, fy;
+	if (x0 < xs) { x = x0;  }
+	else { x = xs;  }
+	x++; 
+	for (x; x < 10000; x++)
+	{
+		
+		y = m1 * x + n; fx = (float)x; 
+		fy = m1 * fx + n; 
+		if (fy - y != 0)
+		{
+			ptr = *m + ((y + 1) * 50 + x); *ptr = 4;
+		}
+		ptr = *m + (y * 50 + x);
+		*ptr = 4;
+		if (x == x0) { break; }
+		if (x == xs) { break; }
+		
+	}
+}
+void Dt(float m1, int y0, int ys)
+{
+	int* ptr; int x=0, y; float fx, fy;
+	if (y0 < ys) { y = y0; }
+	else { y = ys; }
+	y++;
+	for (y; y < 10000; y++)
+	{
+		x = (y - n) / m1;
+		fx = (y - n) / m1;
+		if (fx - x != 0)
+		{
+			ptr = *m + ((y + 1) * 50 + x); *ptr = 4;
+		}
+		ptr = *m + (y * 50 + x);
+		*ptr = 4;
+		if (y == y0) { break; }
+		if (y == ys) { break; }
+	}
+}
+int main()
+{
+
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			m[i][j] = 0;
+		}
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+
+		}
+	}
+	float x0, y0, x, y; x0 = 20; y0 = 70; x = 5; y = 5; int x01 = x0; int x1 = x;
+	denklem(x0, y0, x, y);
+	Line(x01, x1);
+	int m11= denklem(x0, y0, x, y);
+	Dt(m1, y0, y);
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			cout << m[i][j] << "  ";
+		}
+		cout << endl;
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			if (m[i][j] == 0) { cout << "o "; }
+			else { cout << "x "; }
+		}
+		cout << endl;
+	}
+	cout << m1 << endl;
+}
